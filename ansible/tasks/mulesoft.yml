@@ -1,0 +1,95 @@
+---
+- name: Ensure group "mule" exists
+  group:
+    name: mule
+    state: present
+
+- name: Add the user 'mule'
+  user:
+    name: mule
+    group: mule
+    state: present
+
+- name: Create Mule Runtime Directory
+  file:
+    path: /opt/mule/{{ mule.version }}
+    state: directory
+
+- name: Download Mulesoft EE Runtime
+  unarchive:
+    src: https://s3.amazonaws.com/new-mule-artifacts/mule-ee-distribution-standalone-{{ mule.version }}.zip
+    dest: /opt/mule/{{ mule.version }}
+    owner: mule
+    group: mule
+    remote_src: yes
+
+- name: create symlink to current Mule version
+  file:
+    src: /opt/mule/{{ mule.version }}/mule-enterprise-standalone-4.3.0
+    dest: /opt/mule/current
+    owner: mule
+    group: mule
+    state: link
+
+- name: Set Java Initial Memory
+  lineinfile:
+    path: /opt/mule/current/conf/wrapper.conf
+    regexp: '^wrapper\.java\.initmemory=1024'
+    line: "{{ java.memory.initial }}"
+
+- name: Set Java Max Memory
+  lineinfile:
+    path: /opt/mule/current/conf/wrapper.conf
+    regexp: '^wrapper\.java\.maxmemory=1024'
+    line: "{{ java.memory.max }}"
+
+- name: Set Java Initial Metaspace
+  lineinfile:
+    path: /opt/mule/current/conf/wrapper.conf
+    regexp: '^wrapper\.java\.additional\.8=-XX:MetaspaceSize=128m'
+    line: "{{ java.metaspace.initial }}"
+
+- name: Set Java Max Metaspace
+  lineinfile:
+    path: /opt/mule/current/conf/wrapper.conf
+    regexp: '^wrapper\.java\.additional\.7=-XX:MaxMetaspaceSize=256m'
+    line: "{{ java.metaspace.max }}"
+
+- name: Create MULE_HOME Environment Variable
+  shell: export MULE_HOME=/opt/mule/current
+
+- name: Copy Mule Enterprise License
+  copy:
+    src: files/license.lic
+    dest: /opt/mule/current/bin
+
+- name: Register License
+  command: mule -installLicense license.lic
+  become: yes
+  become_user: mule
+  args:
+    chdir: /opt/mule/current/bin
+
+- name: Register Server in AnyPoint
+  command: "{{ mule.amc }} {{ inventory_hostname }} -R {{ mule.region }}"
+  become: yes
+  become_user: mule
+  args:
+    chdir: /opt/mule/current/bin
+
+- name: Copy Mule Service
+  copy:
+    src: files/mule.service
+    dest: /etc/systemd/system/mule.service
+    mode: 0644
+
+- name: Enable Mule Service
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: mule
+
+- name: Start Mule Service
+  systemd:
+    state: started
+    name: mule

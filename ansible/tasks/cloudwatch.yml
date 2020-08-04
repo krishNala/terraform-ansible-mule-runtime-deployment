@@ -1,0 +1,43 @@
+---
+- name: Download CloudWatch Logs Agent
+  get_url:
+    url: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+    dest: /tmp/amazon-cloudwatch-agent.deb
+
+- name: Download CloudWatch Logs Agent Signature
+  get_url:
+    url: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb.sig
+    dest: /tmp/amazon-cloudwatch-agent.deb.sig
+
+- name: Download CloudWatch Logs Agent Public Key
+  get_url:
+    url: https://s3.amazonaws.com/amazoncloudwatch-agent/assets/amazon-cloudwatch-agent.gpg
+    dest: /tmp/amazon-cloudwatch-agent.gpg
+
+- name: Verify CloudWatch Logs Agent Signature
+  command: gpg --import /tmp/amazon-cloudwatch-agent.gpg
+
+- name: Verify CloudWatch Logs Agent Signature
+  command: gpg --verify /tmp/amazon-cloudwatch-agent.deb.sig /tmp/amazon-cloudwatch-agent.deb
+  register: signature_result
+  ignore_errors: True
+
+- debug:
+    msg: "Failed - CloudWatch Log Agent Signature Verification Failed"
+  when: signature_result is failed
+
+- debug:
+    msg: "Success - CloudWatch Log Agent Signature Verification Success"
+  when:  signature_result is success
+
+- name: Install CloudWatch Log Agent
+  apt: deb="/tmp/amazon-cloudwatch-agent.deb"
+  when:  signature_result is success
+
+- name: Copy CloudWatch Agent Config Json
+  copy:
+    src: files/amazon-cloudwatch-agent-schema.json
+    dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+
+- name: Start CloudWatch Log Agent and Setup Config
+  command: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json

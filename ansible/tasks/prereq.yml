@@ -1,0 +1,51 @@
+---
+- name: Adding Adoptopenjdk's Signing Key
+  apt_key:
+    url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    state: present
+
+- name: Adding Adoptopenjdk's repository
+  apt_repository:
+    repo: deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ buster main
+    state: present
+    filename: adoptopenjdk
+
+- name: upgrade packages
+  apt:
+    upgrade: dist
+
+- name: check if reboot is required
+  register: reboot_required_file
+  stat:
+    path: /var/run/reboot-required get_md5=no
+
+- name: restart machine
+  reboot:
+    msg: "Reboot initiated by Ansible"
+  when: reboot_required_file.stat.exists == true
+
+- name: waiting for machine to come back
+  wait_for_connection:
+    delay: 10
+    connect_timeout: 300
+  when: reboot_required_file.stat.exists == true
+
+- name: install AdoptOpenJDK 8 & Unzip
+  apt:
+    name:
+      - adoptopenjdk-8-hotspot
+      - unzip
+    state: present
+
+- name: Check if java is installed
+  command: java -version
+  register: java_result
+  ignore_errors: True
+
+- debug:
+    msg: "Failed - Java is not installed"
+  when: java_result is failed
+
+- debug:
+    msg: "Success - Java is installed"
+  when:  java_result is success

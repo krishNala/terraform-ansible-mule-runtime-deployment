@@ -1,0 +1,9 @@
+- hosts: runtimes
+  gather_facts: yes
+  become: yes
+  become_user: root
+  tasks:
+    - include_vars: vars/variables.yml
+    - include: tasks/prereq.yml
+    - include: tasks/cloudwatch.yml
+    - include: tasks/mulesoft.yml

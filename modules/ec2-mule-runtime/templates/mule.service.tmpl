@@ -1,0 +1,24 @@
+# Systemd unit file for mule standalone runtime
+[Unit]
+Description=Mule Runtime
+After=syslog.target network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/mule
+Environment=MULE_HOME=/opt/mule/current
+Environment="MULE_ENV=${env}"
+TasksMax=infinity
+LimitNOFILE=65335
+
+ExecStart=/opt/mule/current/bin/mule start
+ExecStop=/opt/mule/current/bin/mule stop
+
+User=mule
+Group=mule
+
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

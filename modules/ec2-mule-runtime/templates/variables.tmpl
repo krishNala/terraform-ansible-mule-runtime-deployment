@@ -1,0 +1,22 @@
+cloudwatch:
+  log_group: ${log_group}
+  agent:
+    package_url: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+    package_signature: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb.sig
+
+aws:
+  region: ${region}
+  agent_mode: ec2
+
+mule:
+  version: ${mule_version}
+  region: ${mule_region}
+  amc: ${mule_amc}
+
+java:
+  metaspace:
+    initial: wrapper.java.additional.8=-XX:MetaspaceSize=${java_metaspace_initial}
+    max: wrapper.java.additional.7=-XX:MaxMetaspaceSize=${java_metaspace_max}
+  memory:
+    initial: wrapper.java.initmemory=${java_memory_initial}
+    max: wrapper.java.maxmemory=${java_memory_max}
