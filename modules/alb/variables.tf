@@ -37,7 +37,7 @@ variable "subnets" {
   description = "A list of subnet IDs to associate with NLB"
 }
 
-variable "default_sg_ingress_src" {
+variable "alb_sg_ingress_src" {
   type        = list(string)
   description = "List of allowed ingress CIDR blocks"
 }

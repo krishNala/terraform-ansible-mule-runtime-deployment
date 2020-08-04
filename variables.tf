@@ -71,12 +71,6 @@ variable "instance_count" {
   description           = "The number EC2 instances to deploy"
 }
 
-variable "default_sg_ingress_src" {
-  type        = list(string)
-  description = "List of allowed ingress CIDR blocks"
-  default     = []
-}
-
 variable "developer_ingress_src" {
   type        = list(string)
   description = "List of allowed ingress CIDR blocks for developer machines"
@@ -114,6 +108,16 @@ variable "root_volume_type" {
 variable "root_volume_size" {
   type                  = number
   description           = "The root volume size in GBs"
+}
+
+# ------------------------------------------------------------------------------
+# ALB Variables
+# ------------------------------------------------------------------------------
+
+variable "alb_sg_ingress_src" {
+  type        = list(string)
+  description = "List of allowed ingress CIDR blocks"
+  default     = []
 }
 
 # ------------------------------------------------------------------------------

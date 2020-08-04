@@ -14,7 +14,6 @@ instance_count          = 2
 sg_ec2_ports            = [8081,8082,8083]
 instance_type           = ""
 developer_ingress_src   = [""]
-default_sg_ingress_src  = [""]
 ssh_keypair             = ""
 root_volume_type        = ""
 root_volume_size        = ""
@@ -24,6 +23,7 @@ root_volume_size        = ""
 # ------------------------------------------------------------------------------
 
 certificate_arn         = ""
+alb_sg_ingress_src      = [""]
 
 # ------------------------------------------------------------------------------
 # CloudWatch

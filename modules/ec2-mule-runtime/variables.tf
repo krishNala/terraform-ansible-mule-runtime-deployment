@@ -53,11 +53,6 @@ variable "network_interface" {
   default     = []
 }
 
-variable "default_sg_ingress_src" {
-  type        = list(string)
-  description = "List of allowed ingress CIDR blocks"
-}
-
 variable "mgmt_ingress_src" {
   type        = list(string)
   description = "List of allowed ingress CIDR blocks"

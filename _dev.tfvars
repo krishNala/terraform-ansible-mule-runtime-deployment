@@ -15,7 +15,6 @@ sg_ec2_ports            = [8081,8082,8083]
 instance_type           = ""
 ssh_keypair             = ""
 developer_ingress_src   = [""]
-default_sg_ingress_src  = [""]
 root_volume_type        = "gp2"
 root_volume_size        = "30"
 
@@ -24,6 +23,7 @@ root_volume_size        = "30"
 # ------------------------------------------------------------------------------
 
 certificate_arn         = ""
+alb_sg_ingress_src      = [""]
 
 # ------------------------------------------------------------------------------
 # CloudWatch

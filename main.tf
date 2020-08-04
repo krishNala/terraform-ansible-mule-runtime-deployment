@@ -13,7 +13,6 @@ module "ec2_mule_runtime" {
   instance_type                               = var.instance_type
   ami                                         = var.ami
   sg_ec2_ports                                = var.sg_ec2_ports
-  default_sg_ingress_src                      = var.default_sg_ingress_src
   developer_ingress_src                       = var.developer_ingress_src
   mgmt_ingress_src                            = var.mgmt_ingress_src
   sg_ec2_egress_ports                         = var.sg_ec2_egress_ports
@@ -48,10 +47,9 @@ module "private_mule_alb" {
   subnets                                     = var.private_subnet_ids
   mule_exp_port                               = var.mule_exp_port
   ec2_security_group_id                       = module.ec2_mule_runtime.security_group_id
-  default_sg_ingress_src                      = var.default_sg_ingress_src
+  alb_sg_ingress_src                          = var.alb_sg_ingress_src
   certificate_arn                             = var.certificate_arn
   target_instances                            = module.ec2_mule_runtime.mule_runtime_instance_ids
   instance_count                              = var.instance_count
-
   tags                                        = local.tags
 }

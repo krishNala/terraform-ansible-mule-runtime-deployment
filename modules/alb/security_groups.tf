@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "ingress" {
   from_port         = "443"
   to_port           = "443"
   protocol          = "tcp"
-  cidr_blocks       = var.default_sg_ingress_src
+  cidr_blocks       = var.alb_sg_ingress_src
   security_group_id = aws_security_group._.id
 }
 
