@@ -141,9 +141,8 @@ The app variable is used throughout the Terraform configuration to set the likes
       default               = "mule-runtime"
     }
 ```
-By default the Mule Experience port has been set to 8083, update this variable to match your
+By default the Mule Experience port has been set to 8083, update this variable to match your environment:
 ```
-    environment:
     variable "mule_exp_port" {
       type                  = number
       description           = "The port number of the experience api"
