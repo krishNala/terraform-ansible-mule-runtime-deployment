@@ -91,6 +91,7 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 8. Mule Custer configuration
 9. Cloudwatch log stream to use Instance Name instead of Instance ID (if possible) to make it easier to identify servers in CloudWatch logs.
 10. Additional volume added to EC2 instance for the Mule runtime installation
+11. Amend the EC2 ALB security group source to be a string list, to support for example a private and public load balancer.
 
 Any other suggestions, please shout out.
 
