@@ -13,6 +13,8 @@ The objective of the repo is to create a terraform configuration, which can buil
 
 # What Terraform deploys?
 
+![Example topology based on the configuration in main.tf](files/example.png)
+
 ## EC2 Instance(s)
 
 Terraform will deploy the desired number of runtimes, across the VPC and subnets that you specify in the variable files, creating a security group that allows traffic from the load balancer on the Mule experience port, SSH access for a management subnets.
