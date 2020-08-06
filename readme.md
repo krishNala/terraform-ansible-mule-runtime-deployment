@@ -24,16 +24,16 @@ For development and test, additional rules are configurable, which would enable 
     sg_ec2_ports = [8081,8082,8083]
     developer_ingress_src = ["10.0.0.0/24"]
  ```
-By default, egress traffic has been enabled for 0.0.0.0/0 on ports 80 & 443. To amend this level of access update the variables in the root variables.tf configuration:
+By default, egress traffic has been enabled for 0.0.0.0/0 on ports 80 & 443 (this is to update software and download the likes of Mule and CloudWatch agent). To amend this level of access update the variables in the root variables.tf configuration:
 ```
     variable "default_sg_egress_dst" {
 	    type 		= list(string)
-	    description = "List of allowed ingress CIDR blocks"
+	    description = "List of allowed egress CIDR blocks"
 	    default 	= ["0.0.0.0/0"]
     }
     variable "sg_ec2_egress_ports" {
 	    type        = list(number)
-	    description = "The ports to expose on a security group for the ingress traffic"
+	    description = "The ports to allow egress traffic from the security group"
 	    default     = [80,443]
     }
 ```
@@ -95,6 +95,8 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 10. Additional volume added to EC2 instance for the Mule runtime installation
 11. Amend the EC2 ALB security group source to be a string list, to support for example a private and public load balancer.
 12. Implement filters to select VPC ID and Subnets (you will need consistent VPC and Subnet naming conventions!)
+13. Add NTP settings for the host and allow egress traffic
+14. Integrate with Systems Manager to control updates
 
 Any other suggestions, please shout out.
 

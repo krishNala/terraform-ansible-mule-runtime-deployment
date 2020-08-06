@@ -85,13 +85,13 @@ variable "mgmt_ingress_src" {
 
 variable "default_sg_egress_dst" {
   type        = list(string)
-  description = "List of allowed ingress CIDR blocks"
+  description = "List of allowed egress CIDR blocks"
   default     = ["0.0.0.0/0"]
 }
 
 variable "sg_ec2_egress_ports" {
   type                  = list(number)
-  description           = "The ports to expose on a security group for the ingress traffic"
+  description           = "The ports to allow egress traffic from the security group"
   default               = [80,443]
 }
 

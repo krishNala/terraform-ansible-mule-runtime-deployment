@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------
+# ALB Security Group
+# ------------------------------------------------------------------------------
+
 resource "aws_security_group" "_" {
   name        = "${var.namespace}-${var.environment}-mule-${local.alb_type}-alb"
   vpc_id      = var.vpc_id
@@ -15,6 +19,10 @@ resource "aws_security_group" "_" {
     create_before_destroy = true
   }
 }
+
+# ------------------------------------------------------------------------------
+# --- Security Group Rules
+# ------------------------------------------------------------------------------
 
 resource "aws_security_group_rule" "ingress" {
   type              = "ingress"

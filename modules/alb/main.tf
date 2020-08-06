@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------
+# ALB
+# ------------------------------------------------------------------------------
+
 resource "aws_lb" "_" {
   name               = "${var.namespace}-${var.environment}-mule-${local.alb_type}-alb"
   internal           = var.internal
@@ -18,6 +22,10 @@ resource "aws_lb" "_" {
   )
 }
 
+# ------------------------------------------------------------------------------
+# --- Listener
+# ------------------------------------------------------------------------------
+
 resource "aws_lb_listener" "_" {
   load_balancer_arn = aws_lb._.arn
 
@@ -31,6 +39,10 @@ resource "aws_lb_listener" "_" {
     type             = "forward"
   }
 }
+
+# ------------------------------------------------------------------------------
+# --- Target
+# ------------------------------------------------------------------------------
 
 resource "aws_lb_target_group" "_" {
   name                 = "${var.namespace}-${var.environment}-mule-${local.alb_type}-alb-tg"
@@ -51,6 +63,10 @@ resource "aws_lb_target_group" "_" {
     aws_lb._,
   ]
 }
+
+# ------------------------------------------------------------------------------
+# --- Target Attachment
+# ------------------------------------------------------------------------------
 
 resource "aws_lb_target_group_attachment" "_" {
   count            = var.instance_count
