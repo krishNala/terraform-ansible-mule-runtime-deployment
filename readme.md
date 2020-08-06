@@ -94,6 +94,7 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 9. Cloudwatch log stream to use Instance Name instead of Instance ID (if possible) to make it easier to identify servers in CloudWatch logs.
 10. Additional volume added to EC2 instance for the Mule runtime installation
 11. Amend the EC2 ALB security group source to be a string list, to support for example a private and public load balancer.
+12. Implement filters to select VPC ID and Subnets (you will need consistent VPC and Subnet naming conventions!)
 
 Any other suggestions, please shout out.
 
@@ -212,9 +213,13 @@ P.S I know these JVM sizes aren't big enough to run anything meaningful, its jus
 
 # Commands
 
-To deploy the infrastructure and configure the EC2 instances run the following commands:
+To review and deploy the infrastructure to the development environment and configure the EC2 instances run the following commands:
 ```
 terraform plan -var-file="_dev.tfvars"  
+```
+Review the output and once happy:
+```
+terraform apply -var-file="_dev.tfvars"  
 ```
 ```
 ansible-playbook ansible/playbook.yml  
