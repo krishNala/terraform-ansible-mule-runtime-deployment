@@ -7,7 +7,7 @@ resource "aws_cloudwatch_metric_alarm" "unhealthy_hosts" {
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "HealthyHostCount"
-  namespace           = "AWS/NetworkELB"
+  namespace           = "AWS/ApplicationELB"
   period              = "60"
   statistic           = "Average"
   threshold           = var.instance_count
