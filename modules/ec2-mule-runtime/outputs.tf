@@ -48,6 +48,7 @@ resource "local_file" "variables" {
   java_memory_initial       = var.java_memory_initial
   java_metaspace_max        = var.java_metaspace_max
   java_metaspace_initial    = var.java_metaspace_initial
+  mule_agent_port           = var.mule_agent_port
  }
  )
  filename = "ansible/vars/variables.yml"
@@ -69,7 +70,7 @@ resource "local_file" "cwagent" {
 }
 
 # ------------------------------------------------------------------------------
-# --- CloudWatch Agent Config
+# --- Mule Service
 # ------------------------------------------------------------------------------
 
 resource "local_file" "mule_service" {

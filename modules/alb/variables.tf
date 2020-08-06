@@ -52,6 +52,11 @@ variable "mule_exp_port" {
   description = "The port exposed for the Mulesoft Experience API"
 }
 
+variable "mule_health_check_application_name" {
+  type                  = string
+  description           = "The Mule application name to perform health checks against"
+}
+
 variable "tls_ssl_policy" {
   type        = string
   description = "The name of the SSL Policy for the listener"
@@ -62,12 +67,6 @@ variable "deregistration_delay" {
   type        = number
   default     = 15
   description = "The amount of time to wait in seconds before changing the state of a deregistering target to unused"
-}
-
-variable "health_check_enabled" {
-  type        = bool
-  default     = true
-  description = "A boolean flag to enable/disable the NLB health checks"
 }
 
 variable "health_check_port" {
@@ -82,12 +81,6 @@ variable "health_check_protocol" {
   description = "The protocol to use for the health check request"
 }
 
-variable "health_check_path" {
-  type        = string
-  default     = "/"
-  description = "The destination for the health check request"
-}
-
 variable "health_check_threshold" {
   type        = number
   default     = 2
@@ -96,8 +89,22 @@ variable "health_check_threshold" {
 
 variable "health_check_interval" {
   type        = number
-  default     = 30
   description = "The duration in seconds in between health checks"
+}
+
+variable "health_check_timeout" {
+  type        = number
+  description = "The duration in seconds before the health check times out."
+}
+
+variable "healthy_threshold" {
+  type        = number
+  description = "The number of checks before the instance is declared healthy."
+}
+
+variable "unhealthy_threshold" {
+  type        = number
+  description = "The number of checks before the instance is declared unhealthy."
 }
 
 variable "certificate_arn" {

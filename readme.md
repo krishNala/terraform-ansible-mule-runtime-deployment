@@ -6,10 +6,13 @@ This repository contains the terraform and ansible-playbook to deploy several ru
 2. S3 Bucket configured for managing terraform state files
 3. A deployment role for deploying terraform configurations
 4. SSH Key Pairs
+5. You want to deploy Mule v 4.2.2 (Health check functionality was introduced in 4.2.2)
 
 ## The Objective
 
-The objective of the repo is to create a terraform configuration, which can build immutable infrastructure that is consistent across multiple environments while being customisable and extendable, a full end to end solution for deploying a Mule runtime environment ready application deployment. Simplifying the process by only needing to update variables in a couple of places, even those variables that are used by Ansible such as memory configuration of JVM.
+The objective of the repo is to create a terraform configuration, which can build immutable infrastructure that is consistent across multiple environments while being customisable and extendable, a full end to end solution for deploying a Mule runtime environment ready application deployment. Assuming you wish to only load balance across experience APIs, with process and system APIs being accessed on localhost.
+
+Simplifying the process by only needing to update variables in a couple of places, even those variables that are used by Ansible such as memory configuration of JVM.
 
 # What Terraform deploys?
 
@@ -87,7 +90,7 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 2. S3 Bucket for load balancer access logs
 3. CloudWatch Log Collection & Alarms for Mule Applications
 4. Hardening of the OS
-5. Load balancer health check configuration
+5. ~~Load balancer health check configuration~~
 6. SNS Topic for CloudWatch Alarms
 7. Tidy up the code & make more variables configurable
 8. Mule Custer configuration
@@ -97,6 +100,7 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 12. Implement filters to select VPC ID and Subnets (you will need consistent VPC and Subnet naming conventions!)
 13. Add NTP settings for the host and allow egress traffic
 14. Integrate with Systems Manager to control updates
+15. Improve Ansible playbook so we can upgrade, amend components currently only for first time deployments
 
 Any other suggestions, please shout out.
 

@@ -35,12 +35,6 @@ variable "vpc_id" {
   description           = "The VPC ID"
 }
 
-variable "mule_exp_port" {
-  type                  = number
-  description           = "The port number of the experience api"
-  default               = 8083
-}
-
 variable "certificate_arn" {
   type                  = string
   description           = "The ARN of the certificate to be applied to the load balancer"
@@ -120,6 +114,30 @@ variable "alb_sg_ingress_src" {
   default     = []
 }
 
+variable "alb_healthy_threshold" {
+  type        = number
+  description = "The number of checks before the instance is declared healthy."
+  default     = 3
+}
+
+variable "alb_unhealthy_threshold" {
+  type        = number
+  description = "The number of checks before the instance is declared unhealthy."
+  default     = 10
+}
+
+variable "alb_health_check_timeout" {
+  type        = number
+  description = "The length of time before the check times out"
+  default     = 5
+}
+
+variable "alb_health_check_interval" {
+  type        = number
+  description = "The interval between checks"
+  default     = 10
+}
+
 # ------------------------------------------------------------------------------
 # CloudWatch Variables
 # ------------------------------------------------------------------------------
@@ -147,6 +165,24 @@ variable "mule_version" {
 variable "mule_region" {
   type                  = string
   description           = "The region of the Anypoint control plane to use"
+}
+
+variable "mule_exp_port" {
+  type                  = number
+  description           = "The port number of the experience api"
+  default               = 8083
+}
+
+variable "mule_agent_port" {
+  type                  = number
+  description           = "The port number of the mule agent used to perform application health checks"
+  default               = 9999
+}
+
+variable "mule_health_check_application_name" {
+  type                  = string
+  description           = "The application name which the load balancer will perform application health checks against"
+  default               = ""
 }
 
 variable "mule_amc" {

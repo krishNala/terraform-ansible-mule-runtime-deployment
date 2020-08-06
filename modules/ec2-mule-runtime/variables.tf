@@ -65,13 +65,13 @@ variable "sg_ec2_ports" {
 
 variable "default_sg_egress_dst" {
   type        = list(string)
-  description = "List of allowed ingress CIDR blocks"
+  description = "List of allowed egress CIDR blocks"
   default     = ["0.0.0.0/0"]
 }
 
 variable "sg_ec2_egress_ports" {
   type                  = list(number)
-  description           = "The ports to expose on a security group for the ingress traffic"
+  description           = "The ports to expose from the security group for the egress traffic"
   default               = [443]
 }
 
@@ -106,6 +106,11 @@ variable "alb_security_group_src" {
 variable "mule_exp_port" {
   type        = number
   description = "The port exposed for the Mulesoft Experience API"
+}
+
+variable "mule_agent_port" {
+  type                  = number
+  description           = "The port number of the mule agent used to perform application health checks"
 }
 
 variable "developer_ingress_src" {

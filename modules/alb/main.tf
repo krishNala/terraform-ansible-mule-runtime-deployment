@@ -52,9 +52,17 @@ resource "aws_lb_target_group" "_" {
   target_type          = "instance"
   deregistration_delay = var.deregistration_delay
 
-
   lifecycle {
     create_before_destroy = true
+  }
+
+  health_check {
+    healthy_threshold   = var.healthy_threshold
+    unhealthy_threshold = var.unhealthy_threshold
+    timeout             = var.health_check_timeout
+    interval            = var.health_check_interval
+    path                = "/mule/healthcheck/applications/${var.mule_health_check_application_name}/ready"
+    port                = var.health_check_port
   }
 
   tags = var.tags

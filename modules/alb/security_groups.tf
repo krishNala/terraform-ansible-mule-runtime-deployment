@@ -41,3 +41,12 @@ resource "aws_security_group_rule" "egress" {
   security_group_id         = aws_security_group._.id
   source_security_group_id  = var.ec2_security_group_id
 }
+
+resource "aws_security_group_rule" "health_check_egress" {
+  type                      = "egress"
+  from_port                 = var.health_check_port
+  to_port                   = var.health_check_port
+  protocol                  = "tcp"
+  security_group_id         = aws_security_group._.id
+  source_security_group_id  = var.ec2_security_group_id
+}

@@ -30,6 +30,7 @@ module "ec2_mule_runtime" {
   java_memory_max                             = var.java_memory_max
   root_volume_type                            = var.root_volume_type
   root_volume_size                            = var.root_volume_size
+  mule_agent_port                             = var.mule_agent_port
 
   tags                                        = local.tags
 }
@@ -51,5 +52,12 @@ module "private_mule_alb" {
   certificate_arn                             = var.certificate_arn
   target_instances                            = module.ec2_mule_runtime.mule_runtime_instance_ids
   instance_count                              = var.instance_count
+  health_check_port                           = var.mule_agent_port
+  mule_health_check_application_name          = var.mule_health_check_application_name
+  healthy_threshold                           = var.alb_healthy_threshold
+  unhealthy_threshold                         = var.alb_unhealthy_threshold
+  health_check_timeout                        = var.alb_health_check_timeout
+  health_check_interval                       = var.alb_health_check_interval
+
   tags                                        = local.tags
 }

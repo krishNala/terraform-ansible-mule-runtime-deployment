@@ -46,6 +46,15 @@ resource "aws_security_group_rule" "alb_access" {
   security_group_id          = aws_security_group._.id
 }
 
+resource "aws_security_group_rule" "health_check_access" {
+  type                       = "ingress"
+  from_port                  = var.mule_agent_port
+  to_port                    = var.mule_agent_port
+  protocol                   = "tcp"
+  source_security_group_id   = var.alb_security_group_src
+  security_group_id          = aws_security_group._.id
+}
+
 resource "aws_security_group_rule" "egress" {
   count                      = local.enable_egress_traffic == 1 ? length(compact(var.sg_ec2_egress_ports)) : 0
   type                       = "egress"

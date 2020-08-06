@@ -76,6 +76,21 @@
   become_user: mule
   args:
     chdir: /opt/mule/current/bin
+    creates: /opt/mule/current/conf/mule-agent.yml
+
+- name: "Add agent port to mule-agent.yml"
+  lineinfile:
+    path: /opt/mule/current/conf/mule-agent.yml
+    insertafter: '  rest.agent.transport:'
+    line: "    port: {{ mule.agent_port }}"
+    state: present
+
+- name: "Enable Mule rest agent"
+  replace:
+    path: /opt/mule/current/conf/mule-agent.yml
+    regexp: '  enabled: false'
+    replace: '  enabled: true'
+    after: "    port: {{ mule.agent_port }}"
 
 - name: Copy Mule Service
   copy:
