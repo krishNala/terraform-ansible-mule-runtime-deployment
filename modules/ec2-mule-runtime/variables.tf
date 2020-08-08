@@ -185,3 +185,13 @@ variable "root_volume_size" {
   type                  = number
   description           = "The root volume size in GBs"
 }
+
+variable "sg_ec2_egress_ntp" {
+  type                  = number
+  description           = "The port to allow external NTP access"
+}
+
+variable "sg_ec2_egress_ntp_dst" {
+  type                  = list(string)
+  description           = "The CIDR or the NTP destination"
+}

@@ -98,7 +98,7 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 10. Additional volume added to EC2 instance for the Mule runtime installation
 11. Amend the EC2 ALB security group source to be a string list, to support for example a private and public load balancer.
 12. Implement filters to select VPC ID and Subnets (you will need consistent VPC and Subnet naming conventions!)
-13. Add NTP settings for the host and allow egress traffic
+13. ~~Add NTP settings for the host and allow egress traffic~~
 14. Integrate with Systems Manager to control updates
 15. Improve Ansible playbook so we can upgrade, amend components currently only for first time deployments
 

@@ -66,27 +66,39 @@ variable "instance_count" {
 }
 
 variable "developer_ingress_src" {
-  type        = list(string)
-  description = "List of allowed ingress CIDR blocks for developer machines"
-  default     = []
+  type                  = list(string)
+  description           = "List of allowed ingress CIDR blocks for developer machines"
+  default               = []
 }
 
 variable "mgmt_ingress_src" {
-  type        = list(string)
-  description = "List of allowed ingress CIDR blocks to be able to access the instances on port 22"
-  default     = [""]
+  type                  = list(string)
+  description           = "List of allowed ingress CIDR blocks to be able to access the instances on port 22"
+  default               = [""]
 }
 
 variable "default_sg_egress_dst" {
-  type        = list(string)
-  description = "List of allowed egress CIDR blocks"
-  default     = ["0.0.0.0/0"]
+  type                  = list(string)
+  description           = "List of allowed egress CIDR blocks"
+  default               = ["0.0.0.0/0"]
 }
 
 variable "sg_ec2_egress_ports" {
   type                  = list(number)
   description           = "The ports to allow egress traffic from the security group"
   default               = [80,443]
+}
+
+variable "sg_ec2_egress_ntp" {
+  type                  = number
+  description           = "The port to allow external NTP access"
+  default               = 123
+}
+
+variable "sg_ec2_egress_ntp_dst" {
+  type                  = list(string)
+  description           = "The CIDR or the NTP destination"
+  default               = ["0.0.0.0/0"]
 }
 
 variable "ssh_keypair" {
@@ -109,33 +121,33 @@ variable "root_volume_size" {
 # ------------------------------------------------------------------------------
 
 variable "alb_sg_ingress_src" {
-  type        = list(string)
-  description = "List of allowed ingress CIDR blocks"
-  default     = []
+  type                  = list(string)
+  description           = "List of allowed ingress CIDR blocks"
+  default               = []
 }
 
 variable "alb_healthy_threshold" {
-  type        = number
-  description = "The number of checks before the instance is declared healthy."
-  default     = 3
+  type                  = number
+  description           = "The number of checks before the instance is declared healthy."
+  default               = 3
 }
 
 variable "alb_unhealthy_threshold" {
-  type        = number
-  description = "The number of checks before the instance is declared unhealthy."
-  default     = 10
+  type                  = number
+  description           = "The number of checks before the instance is declared unhealthy."
+  default               = 10
 }
 
 variable "alb_health_check_timeout" {
-  type        = number
-  description = "The length of time before the check times out"
-  default     = 5
+  type                  = number
+  description           = "The length of time before the check times out"
+  default               = 5
 }
 
 variable "alb_health_check_interval" {
-  type        = number
-  description = "The interval between checks"
-  default     = 10
+  type                  = number
+  description           = "The interval between checks"
+  default               = 10
 }
 
 # ------------------------------------------------------------------------------

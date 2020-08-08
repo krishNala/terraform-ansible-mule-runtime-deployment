@@ -32,6 +32,8 @@ module "ec2_mule_runtime" {
   root_volume_size                            = var.root_volume_size
   mule_agent_port                             = var.mule_agent_port
   mule_app_suffix                             = var.mule_app_suffix
+  sg_ec2_egress_ntp                           = var.sg_ec2_egress_ntp
+  sg_ec2_egress_ntp_dst                       = var.sg_ec2_egress_ntp_dst
 
   tags                                        = local.tags
 }
