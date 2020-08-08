@@ -69,7 +69,7 @@ resource "aws_security_group_rule" "ntp_egress" {
   type                       = "egress"
   from_port                  = var.sg_ec2_egress_ntp
   to_port                    = var.sg_ec2_egress_ntp
-  protocol                   = "tcp"
+  protocol                   = "udp"
   cidr_blocks                = var.sg_ec2_egress_ntp_dst
   security_group_id          = aws_security_group._.id
 }
