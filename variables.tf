@@ -209,3 +209,9 @@ variable "java_memory_initial" {
   type                  = string
   description           = "The initial memory to be applied to the jvm, this is used to generate the ansible variable files"
 }
+
+variable "mule_app_suffix" {
+  type                  = string
+  description           = "The suffix applied to all mule app names deployed to a runtime, this is used to ingest the log files into CloudWatch"
+  default               = "-api"
+}

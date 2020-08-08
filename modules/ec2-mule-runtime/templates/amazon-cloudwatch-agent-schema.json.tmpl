@@ -38,22 +38,27 @@
           {
             "file_path": "/var/log/amazon-cloudwatch-agent.log",
             "log_group_name": "${log_group}",
-            "log_stream_name": "cw_agent/{instance_id}",
+            "log_stream_name": "{local_hostname}/cloudwatch_agent",
             "timezone": "Local"
           },{
             "file_path": "/var/log/syslog",
             "log_group_name": "${log_group}",
-            "log_stream_name": "syslog/{instance_id}",
+            "log_stream_name": "{local_hostname}/syslog",
             "timezone": "Local"
           },{
             "file_path": "/opt/mule/current/logs/mule_ee.log",
             "log_group_name": "${log_group}",
-            "log_stream_name": "mule_ee/{instance_id}",
+            "log_stream_name": "{local_hostname}/mule_ee",
             "timezone": "Local"
           },{
             "file_path": "/opt/mule/current/logs/mule_agent.log",
             "log_group_name": "${log_group}",
-            "log_stream_name": "mule_agent/{instance_id}",
+            "log_stream_name": "{local_hostname}/mule_agent",
+            "timezone": "Local"
+          },{
+            "file_path": "/opt/mule/current/logs/*${mule_app_suffix}.log",
+            "log_group_name": "${log_group}",
+            "log_stream_name": "{local_hostname}/mule_apps",
             "timezone": "Local"
           }
         ]

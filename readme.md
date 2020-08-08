@@ -88,13 +88,13 @@ The playbook downloads the AWS CloudWatch agent for Ubuntu and verifies the sign
 
 1. EC2 Instance Cluster Traffic Security Group Rules
 2. S3 Bucket for load balancer access logs
-3. CloudWatch Log Collection & Alarms for Mule Applications
+3. ~~CloudWatch Log Collection for Mule Applications~~ & Alarms
 4. Hardening of the OS
 5. ~~Load balancer health check configuration~~
 6. SNS Topic for CloudWatch Alarms
 7. Tidy up the code & make more variables configurable
 8. Mule Custer configuration
-9. Cloudwatch log stream to use Instance Name instead of Instance ID (if possible) to make it easier to identify servers in CloudWatch logs.
+9. ~~Cloudwatch log stream to use Instance Name instead of Instance ID (if possible) to make it easier to identify servers in CloudWatch logs.~~
 10. Additional volume added to EC2 instance for the Mule runtime installation
 11. Amend the EC2 ALB security group source to be a string list, to support for example a private and public load balancer.
 12. Implement filters to select VPC ID and Subnets (you will need consistent VPC and Subnet naming conventions!)
@@ -157,6 +157,22 @@ By default the Mule Experience port has been set to 8083, update this variable t
       description           = "The port number of the experience api"
       default               = 8083
     }
+```
+By default the CloudWatch agent will aggregate logs for all mule apps based on the suffix '-api', update this variable to match your naming conventions
+```
+variable "mule_app_suffix" {
+  type                  = string
+  description           = "The suffix applied to all mule app names deployed to a runtime, this is used to ingest the log files into CloudWatch"
+  default               = "-api"
+}
+```
+Application load balancing health checks is implemented using the status service introduced in Mule 4.2.2, ensure you update this variable with the API you wish to use for monitoring host health:
+```
+variable "mule_health_check_application_name" {
+  type                  = string
+  description           = "The application name which the load balancer will perform application health checks against"
+  default               = ""
+}
 ```
 By default the Ubuntu image in eu-west-2 has been used, update this variable to use your own AMI:
 ```

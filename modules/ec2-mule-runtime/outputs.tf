@@ -64,6 +64,7 @@ resource "local_file" "cwagent" {
   log_group               = aws_cloudwatch_log_group._.name,
   region                  = data.aws_region.default.name
   custom_metric_namespace = var.custom_metric_namespace
+  mule_app_suffix         = var.mule_app_suffix
  }
  )
  filename = "ansible/files/amazon-cloudwatch-agent-schema.json"

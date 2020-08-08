@@ -171,6 +171,11 @@ variable "mule_amc" {
   description           = "The AMC command to register the instance in the Anypoint Control Plane"
 }
 
+variable "mule_app_suffix" {
+  type                  = string
+  description           = "The suffix applied to all mule app names deployed to a runtime, this is used to ingest the log files into CloudWatch"
+}
+
 variable "root_volume_type" {
   type                  = string
   description           = "The root volume type"

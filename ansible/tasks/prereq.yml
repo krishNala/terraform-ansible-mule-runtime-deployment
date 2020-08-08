@@ -1,4 +1,8 @@
 ---
+- name: Change hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
 - name: Adding Adoptopenjdk's Signing Key
   apt_key:
     url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public

@@ -31,6 +31,7 @@ module "ec2_mule_runtime" {
   root_volume_type                            = var.root_volume_type
   root_volume_size                            = var.root_volume_size
   mule_agent_port                             = var.mule_agent_port
+  mule_app_suffix                             = var.mule_app_suffix
 
   tags                                        = local.tags
 }
